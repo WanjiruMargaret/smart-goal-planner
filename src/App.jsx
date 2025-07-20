@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import GoalForm from "./Components/GoalForm";
 import GoalList from "./Components/GoalList";
 import Overview from "./Components/Overview";
 import DepositForm from "./Components/DepositForm";
@@ -6,7 +7,15 @@ import DepositForm from "./Components/DepositForm";
 function App() {
   const [goals, setGoals] = useState([]);
 
-  // Fetch goals from db.json on mount
+  // 🟢 Form state for GoalForm
+  const [formData, setFormData] = useState({
+    name: "",
+    targetAmount: "",
+    category: "",
+    deadline: "",
+  });
+
+  // 🟢 Fetch goals from db.json
   useEffect(() => {
     fetch("http://localhost:3000/goals")
       .then((res) => res.json())
@@ -14,7 +23,28 @@ function App() {
       .catch((error) => console.error("Error fetching goals:", error));
   }, []);
 
-  // Add a new goal
+  // 🟢 Handle input changes in the form
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  // 🟢 Handle form submission
+  function handleSubmit(e) {
+    e.preventDefault();
+    addGoal(formData);
+    setFormData({
+      name: "",
+      targetAmount: "",
+      category: "",
+      deadline: "",
+    }); // reset form
+  }
+
+  // 🟢 Add a new goal
   function addGoal(newGoal) {
     fetch("http://localhost:3000/goals", {
       method: "POST",
@@ -27,7 +57,7 @@ function App() {
       .then((data) => setGoals([...goals, data]));
   }
 
-  // Update a goal (PATCH)
+  // 🟢 Update a goal
   function updateGoal(updatedGoal) {
     fetch(`http://localhost:3000/goals/${updatedGoal.id}`, {
       method: "PATCH",
@@ -44,7 +74,7 @@ function App() {
       );
   }
 
-  // Delete a goal
+  // 🟢 Delete a goal
   function deleteGoal(goalId) {
     fetch(`http://localhost:3000/goals/${goalId}`, {
       method: "DELETE",
@@ -57,7 +87,11 @@ function App() {
     <div className="App">
       <h1>SMART GOAL PLANNER</h1>
 
-      <GoalForm onAddGoal={addGoal} />
+      <GoalForm
+        formData={formData}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
 
       <Overview goals={goals} />
 
