@@ -33,7 +33,7 @@ export default function AddGoalForm({ onAddGoal }) {
       <input name="targetAmount" type="number" placeholder="Target Amount" value={formData.targetAmount} onChange={handleChange} required />
       <input name="savedAmount" type="number" placeholder="Saved Amount" value={formData.savedAmount} onChange={handleChange} />
       <input name="category" placeholder="Category" value={formData.category} onChange={handleChange} />
-      <input name="deadline" type="date" value={formData.deadline} onChange={handleChange} required />
+      <input name="deadline" type="date" placeholder="Deadline" value={formData.deadline} onChange={handleChange} required />
       <button type="submit">Add Goal</button>
     </form>
   );
