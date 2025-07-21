@@ -6,13 +6,14 @@ function Overview({ goals }) {
   const totalRemaining = totalTarget - totalSaved;
 
   return (
-    <div className="overview">
+    <div>
       <h2>Overview</h2>
-      <p><strong>Total Target:</strong> Ksh {totalTarget}</p>
-      <p><strong>Total Saved:</strong> Ksh {totalSaved}</p>
-      <p><strong>Remaining:</strong> Ksh {totalRemaining}</p>
+      <p>Total Target: Ksh {totalTarget}</p>
+      <p>Total Saved: Ksh {totalSaved}</p>
+      <p>Remaining: Ksh {totalRemaining}</p>
     </div>
   );
 }
 
 export default Overview;
+
